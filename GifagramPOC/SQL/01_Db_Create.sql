@@ -24,7 +24,7 @@ CREATE TABLE [UserProfile] (
 
 CREATE TABLE [Posting] (
   [Id] integer PRIMARY KEY IDENTITY,
-  [Title] nvarchar(30) NOT NULL,
+  [Title] nvarchar(55) NOT NULL,
   [ImageUrl] nvarchar(255) NOT NULL,
   [Caption] nvarchar(255) NULL,
   [UserProfileId] UNIQUEIDENTIFIER NOT NULL,
@@ -45,6 +45,7 @@ CREATE TABLE [Comment] (
   [Id] integer PRIMARY KEY IDENTITY,
   [UserProfileId] UNIQUEIDENTIFIER NOT NULL,
   [PostingId]  integer NOT NULL,
+  [Message]  nvarchar NOT NULL,
 
   CONSTRAINT [FK_Comment_UserProfile] FOREIGN KEY ([UserProfileId]) REFERENCES [UserProfile] ([Id]),
   CONSTRAINT [FK_Comment_Posting] FOREIGN KEY ([PostingId]) REFERENCES [Posting] ([Id])

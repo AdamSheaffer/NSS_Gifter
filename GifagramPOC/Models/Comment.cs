@@ -8,9 +8,10 @@ namespace GifagramPOC.Models
     public class Comment
     {
         public int Id { get; set; }
-        public string UserProfileId { get; set; }
+        public int UserProfileId { get; set; }
         public UserProfile UserProfile { get; set; }
-        public int PostingId { get; set; }
-        public Posting Posting { get; set; }
+        public int PostId { get; set; }
+        public Post Post { get; set; }
+        public string Message { get; set; }
     }
 }
