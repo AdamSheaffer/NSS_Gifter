@@ -24,7 +24,7 @@ namespace GifagramPOC.Repositories
 
         public async Task<UserProfile> GetByFbUid(string fbuid)
         {
-            return await _context.UserProfile.FirstOrDefaultAsync(u => u.FbUid == fbuid);
+            return await _context.UserProfile.FirstOrDefaultAsync(u => u.FirebaseId == fbuid);
         }
     }
 }

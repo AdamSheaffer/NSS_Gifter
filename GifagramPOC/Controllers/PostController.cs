@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using GifagramPOC.Data;
 using GifagramPOC.Models;
 using GifagramPOC.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -54,6 +55,7 @@ namespace GifagramPOC.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Post(Post post)
         {
             var currentUser = await GetCurrentUser();
@@ -65,6 +67,7 @@ namespace GifagramPOC.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public IActionResult Put(int id, Post post)
         {
             if (id != post.Id)
@@ -77,6 +80,7 @@ namespace GifagramPOC.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public IActionResult Delete(int id)
         {
             _postRepository.Delete(id);

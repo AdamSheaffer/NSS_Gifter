@@ -25,7 +25,7 @@ namespace GifagramPOC.Controllers
         [HttpGet]
         public async Task<ActionResult<UserProfile>> GetUser(string fbuid)
         {
-            var userProfile = await _context.UserProfile.FirstOrDefaultAsync(u => u.FbUid == fbuid);
+            var userProfile = await _context.UserProfile.FirstOrDefaultAsync(u => u.FirebaseId == fbuid);
 
             if (userProfile == null)
             {

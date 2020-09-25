@@ -21,6 +21,8 @@ namespace GifagramPOC.Repositories
         {
             return _context.Post
                 .Include(p => p.UserProfile)
+                .Include(p => p.Comments)
+                    .ThenInclude(c => c.UserProfile)
                 .OrderByDescending(p => p.DateCreated)
                 .ToList();
         }

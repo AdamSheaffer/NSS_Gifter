@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as firebase from "firebase/app";
 import "firebase/auth";
 
 export const UserContext = React.createContext();
 
 export const UserProvider = (props) => {
+  console.log(firebase.auth().currentUser);
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("user"));
 
   const getCurrentUser = () => {
@@ -17,12 +18,9 @@ export const UserProvider = (props) => {
       .auth()
       .signInWithEmailAndPassword(email, pw);
 
-    const token = await user.getIdToken();
     const profile = await getUser(user.uid);
 
-    localStorage.setItem("token", token);
     localStorage.setItem("user", JSON.stringify(profile));
-    setIsLoggedIn(true);
   };
 
   const register = async (profile) => {
@@ -30,22 +28,18 @@ export const UserProvider = (props) => {
       .auth()
       .createUserWithEmailAndPassword(profile.email, profile.password);
 
-    profile.fbUid = user.uid;
-    const token = await user.getIdToken();
+    profile.firebaseId = user.uid;
     const newProfile = await saveUser(profile);
 
-    localStorage.setItem("token", token);
     localStorage.setItem("user", JSON.stringify(newProfile));
-    setIsLoggedIn(true);
   };
 
   const logout = () => {
     firebase.auth().signOut();
     localStorage.clear();
-    setIsLoggedIn(false);
   };
 
-  const getAuthHeaderValue = () => `Bearer ${localStorage.getItem("token")}`;
+  const getAuthHeaderValue = () => firebase.auth().currentUser.getIdToken(true);
 
   const saveUser = (profile) => {
     return fetch("/api/user", {
@@ -60,6 +54,13 @@ export const UserProvider = (props) => {
   const getUser = (firebaseUid) => {
     return fetch(`/api/user?fbuid=${firebaseUid}`).then((res) => res.json());
   };
+
+  useEffect(() => {
+    return firebase.auth().onAuthStateChanged((u) => {
+      console.log(u);
+      setIsLoggedIn(!!u);
+    });
+  }, []);
 
   return (
     <UserContext.Provider

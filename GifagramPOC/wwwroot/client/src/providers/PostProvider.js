@@ -24,7 +24,7 @@ export const PostProvider = (props) => {
   const addPost = (post) => {
     const token = localStorage.getItem("token");
 
-    return fetch("/api/post", {
+    return fetch("/api/comment", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -34,9 +34,30 @@ export const PostProvider = (props) => {
     });
   };
 
+  const leaveComment = (postId, message) => {
+    const comment = { postId, message };
+    const token = localStorage.getItem("token");
+
+    return fetch("/api/comment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(comment),
+    }).then(getAllPosts);
+  };
+
   return (
     <PostContext.Provider
-      value={{ posts, getAllPosts, addPost, getPost, searchPosts }}
+      value={{
+        posts,
+        getAllPosts,
+        addPost,
+        getPost,
+        searchPosts,
+        leaveComment,
+      }}
     >
       {props.children}
     </PostContext.Provider>

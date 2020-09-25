@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import * as firebase from "firebase/app";
+import "firebase/auth";
 import "semantic-ui-css/semantic.min.css";
 import "./index.css";
 import App from "./App";
@@ -13,6 +14,8 @@ firebase.initializeApp({
   messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
   appId: process.env.REACT_APP_APP_ID,
 });
+
+firebase.auth().setPersistence("session");
 
 ReactDOM.render(
   <React.StrictMode>

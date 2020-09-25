@@ -10,6 +10,8 @@
     "bootstrap": "^4.5.0",
     "date-fns": "^2.14.0",
     "firebase": "^7.15.5",
+    "jwt-decode": "^2.2.0",
+    "lodash": "^4.17.15",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",

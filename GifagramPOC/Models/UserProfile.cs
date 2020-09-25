@@ -18,7 +18,7 @@ namespace GifagramPOC.Models
 
         public string ImageUrl { get; set; }
 
-        public string FbUid { get; set; }
+        public string FirebaseId { get; set; }
 
         public DateTime DateCreated { get; set; }
     }
